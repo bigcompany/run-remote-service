@@ -1,0 +1,14 @@
+{
+  "name": "run-remote-service",
+  "version": "1.0.0",
+  "description": "middleware used for forwarding incoming HTTP service requests to an awaiting worker pool.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Marak Squires <marak.squires@gmail.com",
+  "license": "MIT",
+  "dependencies": {
+    "hyperquest": "^1.2.0"
+  }
+}
