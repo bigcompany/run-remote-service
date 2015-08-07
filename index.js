@@ -7,8 +7,8 @@ module['exports'] = function runRemoteService (opts) {
   return function runRemoteServiceHandler (req, res) {
     var w = pool.pop();
     pool.unshift(w);
-    var _url = 'http://localhost:' + w + req.url;
-
+    // TODO: make https configurable
+    var _url = 'https://localhost:' + w + req.url;
     // console.log('about to use worker', _url);
 
     if (typeof req.headers["x-forwarded-for"] !== 'undefined' && req.headers["x-forwarded-for"].length > 0) {
