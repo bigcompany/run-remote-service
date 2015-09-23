@@ -8,7 +8,7 @@ module['exports'] = function runRemoteService (opts) {
     var w = pool.pop();
     pool.unshift(w);
     // TODO: make https configurable
-    var _url = 'https://localhost:' + w + req.url;
+    var _url = 'https://0.0.0.0:' + w + req.url;
     // console.log('about to use worker', _url);
 
     if (typeof req.headers["x-forwarded-for"] !== 'undefined' && req.headers["x-forwarded-for"].length > 0) {
@@ -26,7 +26,9 @@ module['exports'] = function runRemoteService (opts) {
       console.log('WORKER STREAM ERROR', err)
       // Should we comment out this error handling?
       // do nothing...
-      res.write('Error communicating with worker ' + w + '\n\n');
+      res.write('Error communicating with worker ' + _url + '\n\n');
+      res.write('The streaming connection errored in recieving data.\n\n');
+      res.write('Please copy and paste this entire error message to Support.\n\n');
       res.end(err.stack)
     });
 
