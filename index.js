@@ -3,12 +3,13 @@ var request = require('hyperquest');
 module['exports'] = function runRemoteService (opts) {
 
   opts.pool = opts.pool || ["10000", "10001", "10002", "10003", "10004"];
+  opts.host = opts.host || "0.0.0.0";
   var pool = opts.pool;
   return function runRemoteServiceHandler (req, res) {
     var w = pool.pop();
     pool.unshift(w);
     // TODO: make https configurable
-    var _url = 'https://0.0.0.0:' + w + req.url;
+    var _url = 'https://' + opts.host + ':' + w + req.url;
     // console.log('about to use worker', _url);
 
     if (typeof req.headers["x-forwarded-for"] !== 'undefined' && req.headers["x-forwarded-for"].length > 0) {
