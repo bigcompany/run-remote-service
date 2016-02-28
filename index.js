@@ -10,7 +10,7 @@ module['exports'] = function runRemoteService (opts) {
     pool.unshift(w);
     // TODO: make https configurable
     var _url = 'http://' + w.host + ':' + w.port + req.url;
-    console.log('about to use worker', _url);
+    console.log(new Date().toString() + ' - about to use worker', _url);
 
     if (typeof req.headers["x-forwarded-for"] !== 'undefined' && req.headers["x-forwarded-for"].length > 0) {
       // preserve existing x-forwarded-for header
