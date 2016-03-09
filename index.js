@@ -24,7 +24,7 @@ module['exports'] = function runRemoteService (opts) {
       req.headers["X-Hookio-User-Session-Name"] = req.session.user;
     }
 
-    var stream = request.post(_url, {
+    var stream = request[req.method](_url, {
       headers: req.headers
     });
 
@@ -46,11 +46,20 @@ module['exports'] = function runRemoteService (opts) {
         // Remark: Don't overwrite the passport session on server
         // This may cause issues with user hooks which intend to modify cookies
         if (p !== "set-cookie") {
-          res.setHeader(p, response.headers[p])
+          try {
+            res.setHeader(p, response.headers[p])
+          } catch (err) {
+            console.log('warning, bad headers', err.message)
+          }
         }
       }
       // replay the status code
-      res.writeHead(response.statusCode);
+      try {
+        res.writeHead(response.statusCode);
+      } catch (err) {
+        console.log('warning, bad headers', err.message)
+      }
+
     });  
   };
 
