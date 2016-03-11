@@ -24,7 +24,7 @@ module['exports'] = function runRemoteService (opts) {
       req.headers["X-Hookio-User-Session-Name"] = req.session.user;
     }
 
-    var stream = request[req.method](_url, {
+    var stream = request['post'](_url, {
       headers: req.headers
     });
 
