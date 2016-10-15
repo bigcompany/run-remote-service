@@ -1,6 +1,6 @@
 {
   "name": "run-remote-service",
-  "version": "1.0.1",
+  "version": "2.0.0",
   "description": "middleware used for forwarding incoming HTTP service requests to an awaiting worker pool.",
   "main": "index.js",
   "scripts": {
