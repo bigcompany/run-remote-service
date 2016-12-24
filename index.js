@@ -17,7 +17,7 @@ module['exports'] = function runRemoteService (opts) {
   return function runRemoteServiceHandler (req, res) {
     var w = pool.pop();
     pool.unshift(w);
-
+    console.log(new Date(), w.host, w.port, req.method, req.url, req.params);
     // TODO: make https configurable
     var _url = 'http://' + w.host + ':' + w.port + req.url;
     // console.log(new Date().toString() + ' - about to use worker', _url);
