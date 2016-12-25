@@ -15,7 +15,14 @@ module['exports'] = function runRemoteService (opts) {
   var pool = opts.pool;
 
   return function runRemoteServiceHandler (req, res) {
+    if (pool.length === 0) {
+      return errorHandler(new Error('No available nodes in pool.'), req, res);
+    }
     var w = pool.pop();
+    if (typeof w === "undefined") {
+      return errorHandler(new Error('Tried to route to an undefined node in pool'), req, res);
+    }
+
     pool.unshift(w);
     console.log(new Date(), w.host, w.port, req.method, req.url, req.params);
     // TODO: make https configurable
