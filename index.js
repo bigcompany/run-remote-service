@@ -1,5 +1,4 @@
 var request = require('hyperquest');
-
 module['exports'] = function runRemoteService (opts) {
 
   var errorHandler = opts.errorHandler || function (err, req, res) {
@@ -24,6 +23,8 @@ module['exports'] = function runRemoteService (opts) {
     }
 
     pool.unshift(w);
+
+    // TODO: make logging statement configurable
     console.log(new Date(), w.host, w.port, req.method, req.url, req.params);
     // TODO: make https configurable
     var _url = 'http://' + w.host + ':' + w.port + req.url;
@@ -54,10 +55,10 @@ module['exports'] = function runRemoteService (opts) {
       }
     });
 
-    if (req.method === "POST") { // TODO: pipe requests from other verbs?
-      req.pipe(stream).pipe(res);
-    } else {
+    if (req.method === "GET") { // TODO: pipe requests from other verbs?
       stream.pipe(res);
+    } else {
+      req.pipe(stream).pipe(res);
     }
 
     stream.on('response', function (response) {
@@ -72,7 +73,7 @@ module['exports'] = function runRemoteService (opts) {
       }
       // replay the status code
       try {
-        res.writeHead(response.statusCode);
+        res.status(response.statusCode);
       } catch (err) {
         console.log('warning, bad headers', err.message)
       }
